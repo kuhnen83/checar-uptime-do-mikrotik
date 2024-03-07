@@ -6,7 +6,7 @@
 
 #!/bin/bash
 
-# Definir as variáveis para o endereço IP do dispositivo SNMP, a comunidade SNMP e a OID para tempo de ativi>
+# Definir as variáveis para o endereço IP do dispositivo SNMP, a comunidade SNMP e a OID para tempo de atividade
 ip_address="192.168.0.1"
 community_string="public"
 oid_sys_uptime="1.3.6.1.2.1.1.3.0"
