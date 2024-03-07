@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Definir as variáveis para o endereço IP do dispositivo SNMP, a comunidade SNMP e a OID para tempo de ativi>
-ip_address="2cf90119df68.sn.mynetname.net"
-community_string="kuhnen"
+ip_address="192.168.0.1"
+community_string="public"
 oid_sys_uptime="1.3.6.1.2.1.1.3.0"
 
 
@@ -13,15 +13,15 @@ while true; do
 uptime_result=$(snmpget -v2c -c $community_string $ip_address $oid_sys_uptime | awk '{print $NF}')
 
 # Token do seu bot do Telegram
-telegram_token="AAE5k75rNzqz1qK7s1nGoURx0XRNVqsXRF8"
+telegram_token="TOKEN_AQUI"
 # ID do chat para onde deseja enviar a mensagem
-chat_id="-1001899484513"
+chat_id="CHAT_ID_AQUI"
 
 # Mensagem a ser enviada para o Telegram
 message="⚠️UPTIME da RB: $uptime_result"
 
 # Enviar a mensagem para o Telegram usando a API do Bot
-curl -s -X POST https://api.telegram.org/bot6724535627:AAE5k75rNzqz1qK7s1nGoURx0XRNVqsXRF8/sendMessage? -d c>
+curl -s -X POST https://api.telegram.org/bot64444:TOKEN_AQUI/sendMessage? -d c>
 
  # Aguardar 10 segundos antes da próxima verificação
     sleep 10
