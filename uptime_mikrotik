@@ -1,3 +1,9 @@
+# se remover ( while true; do ) e ( sleep 10 ), vai parar de checar a cada 10 segundos.
+#podendo programar no crontab pra checar de hora em hora.
+#altere conforme sua necessidade
+#by kuhnen
+
+
 #!/bin/bash
 
 # Definir as variáveis para o endereço IP do dispositivo SNMP, a comunidade SNMP e a OID para tempo de ativi>
