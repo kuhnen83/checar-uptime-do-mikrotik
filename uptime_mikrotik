@@ -1,34 +1,24 @@
-# se remover ( while true; do ) e ( sleep 10 ), vai parar de checar a cada 10 segundos.
-#podendo programar no crontab pra checar de hora em hora.
+#!/bin/bash
+
 #altere conforme sua necessidade
 #by kuhnen
 
+LOG=/var/log/monitor.log
+TELEGRAM_BOT_TOKEN="SEU_TOKEN_AQUI"
+CHAT_ID="SEU_CHAT_ID_AQUI"
 
-#!/bin/bash
+echo
+echo "= $(date +%d/%m/%Y-%kh%Mm) =" >> "$LOG"
+snmp_output=$(snmpget -v 2c -c public 192.168.0.22 .1.3.6.1.2.1.1.3.0) #altere o ip, pelo ip do equipamento que vc quer monitorar
+echo "RB HOME UPTIME" >> /var/log/monitor.log
+echo "$snmp_output" >> "$LOG"
 
-# Definir as variáveis para o endereço IP do dispositivo SNMP, a comunidade SNMP e a OID para tempo de atividade
-ip_address="192.168.0.1"
-community_string="public"
-oid_sys_uptime="1.3.6.1.2.1.1.3.0"
+# Enviar para o Telegram
+telegram_send_message() {
+    local message="$1"
+    curl -s -X POST "https://api.telegram.org/botxxxxx:seu_token_aqui/sendMessage" \
+        -d "chat_id=$CHAT_ID" \
+        -d "text=$message"
+}
 
-
-# Loop infinito para verificar o tempo de atividade e enviar a mensagem a cada 10 segundos
-while true; do
-
-# Consultar o tempo de atividade via SNMP
-uptime_result=$(snmpget -v2c -c $community_string $ip_address $oid_sys_uptime | awk '{print $NF}')
-
-# Token do seu bot do Telegram
-telegram_token="TOKEN_AQUI"
-# ID do chat para onde deseja enviar a mensagem
-chat_id="CHAT_ID_AQUI"
-
-# Mensagem a ser enviada para o Telegram
-message="⚠️UPTIME da RB: $uptime_result"
-
-# Enviar a mensagem para o Telegram usando a API do Bot
-curl -s -X POST https://api.telegram.org/bot64444:TOKEN_AQUI/sendMessage? -d c>
-
- # Aguardar 10 segundos antes da próxima verificação
-    sleep 10
-done
+telegram_send_message "UPTIME_mikrotik: $snmp_output"
